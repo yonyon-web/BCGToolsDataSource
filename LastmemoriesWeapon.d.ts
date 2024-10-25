@@ -1,4 +1,4 @@
-export namespace Lastmemories {
+export namespace LastmemoriesDataSource {
   export type Weapon = {
     id: string;
     name: string;
