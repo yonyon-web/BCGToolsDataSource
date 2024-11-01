@@ -1,8 +1,8 @@
-export namespace LastmemoriesDataSource {
-  export type Weapon = {
+export type Weapon = {
     id: string;
     name: string;
     role: string;
+    back: string;
     hp: number;
     mp: number;
     pAtk: number;
@@ -17,5 +17,4 @@ export namespace LastmemoriesDataSource {
     skill4: string;
     skill5: string;
     skill6: string;
-  }
 }
