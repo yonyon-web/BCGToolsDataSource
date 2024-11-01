@@ -1,15 +1,14 @@
-export namespace LastmemoriesDataSource {
-  export type Doll = {
+export type Doll = {
     id: string;
     name: string;
     nameEn: string;
     unit: string;
-    role: string;
-    attr: string;
     cv: string;
     mv: string;
-    rarity: string;
     text: string;
+    role: string;
+    attr: string;
+    rarity: string;
     skills: string;
     hp: number;
     mp: number;
@@ -28,5 +27,4 @@ export namespace LastmemoriesDataSource {
     usCharacteristic: string;
     usEvoCond1: string;
     usEvoCond2: string;
-  }
 }
