@@ -1,5 +1,4 @@
-export namespace LastmemoriesDataSource {
-  export type Skill = {
+export type Skill = {
     id: string;
     name: string;
     attr: string;
@@ -11,5 +10,4 @@ export namespace LastmemoriesDataSource {
     evoCond2: string;
     evoEffect1: string;
     evoEffect2: string;
-  }
 }
