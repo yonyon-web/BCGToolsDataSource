@@ -32,7 +32,7 @@ export class DataSource<T> {
                 ...item,
                 [`_${String(key)}`]: item[key],
                 // @ts-ignore
-                [key]: item[key].map(v => other.values.find(oItem => oItem[oKey].toString() === v.toString())) as O[]
+                [key]: other.data.find(oItem => oItem[oKey].toString().trim() === v.toString().trim()) as O[]
             }
         }) as unknown as R[];
 
@@ -60,7 +60,7 @@ export class DataSource<T> {
                 ...item,
                 [`_${String(key)}`]: item[key],
                 // @ts-ignore
-                [key]: other.values.find(oItem => oItem[oKey].toString() === item[key].toString()) as O
+                [key]: other.values.find(oItem => oItem[oKey].toString().trim() === item[key].toString().trim()) as O
 
             }
         }) as unknown as R[];
