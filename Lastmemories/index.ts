@@ -1,5 +1,5 @@
 import { DataSource, type ExtractDataType } from '../DataSource';
-import { ReplaceProperty } from '../util';
+import type { ReplaceProperty } from '../util';
 import ArmorData from './Armor.csv';
 import DollData from './Doll.csv';
 import SetEffectData from './SetEffect.csv';
@@ -66,7 +66,7 @@ export const DollDataSource = new DataSource<LastmemoriesDataSource.Doll>(DollDa
 export const SkillDataSource = _SkillDataSource.hasManyLazy("learnChara", (skill) => {
     return DollDataSource.data.filter(doll => doll._skills.includes(skill.name))
 })
-    export type SkillData = ExtractDataType<typeof SkillDataSource>;
+export type SkillData = ExtractDataType<typeof SkillDataSource>;
 
 export type DollData = ReplaceProperty<ExtractDataType<typeof DollDataSource>, "uniqueSKill", SkillData>;
 
