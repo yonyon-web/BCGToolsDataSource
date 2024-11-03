@@ -1,5 +1,5 @@
 export class DataSource<T> {
-    private data: T[];
+    data: T[];
 
     constructor(data: T[]) {
         this.data = data;
@@ -29,7 +29,36 @@ export class DataSource<T> {
                 // @ts-ignore
                 [key]: item[key].map(v => other.values.find(oItem => oItem[oKey].toString() === v.toString())) as O[]
             }
+        }) as (Omit<T, K> & Record<K, O[]>)[];
+
+        return new DataSource(newData);
+    }
+
+    hasManyLazy<O, K extends string>(newKey: K, fn: (item: T) => O[]): DataSource<T & { [key in K]: () => O[] }> {
+        const newData = this.data.map(item => {
+            return {
+                ...item,
+                [newKey]: () => fn(item)
+            }
         });
+
+        return new DataSource(newData) as DataSource<T & { [key in K]: () => O[] }>;
+    }
+
+    oneToMap<
+        K extends keyof T,
+        O,
+        R extends Omit<T, K> & Record<K, O> & Record<`_${string & K}`, T[K]>
+    >(key: K, other: DataSource<O>, oKey: string): DataSource<R> {
+        const newData = this.data.map(item => {
+            return {
+                ...item,
+                [`_${String(key)}`]: item[key],
+                // @ts-ignore
+                [key]: other.values.find(oItem => oItem[oKey].toString() === item[key].toString()) as O
+
+            }
+        }) as unknown as R[];
 
         return new DataSource(newData);
     }
