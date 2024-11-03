@@ -32,7 +32,7 @@ export class DataSource<T> {
                 ...item,
                 [`_${String(key)}`]: item[key],
                 // @ts-ignore
-                [key]: other.data.find(oItem => oItem[oKey].toString().trim() === item.toString().trim()) as O[]
+                [key]: other.data.filter(oItem => oItem[oKey].toString().trim() === item[key].toString().trim()) as O[]
             }
         }) as unknown as R[];
 
