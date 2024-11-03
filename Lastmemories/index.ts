@@ -1,10 +1,10 @@
-
-import { DataSource, ExtractDataType } from '../DataSource';
+import { DataSource, type ExtractDataType } from '../DataSource';
+import { ReplaceProperty } from '../util';
 import ArmorData from './Armor.csv';
 import DollData from './Doll.csv';
 import SetEffectData from './SetEffect.csv';
 import SkillData from './Skill.csv';
-import { LastmemoriesDataSource } from './type';
+import type { LastmemoriesDataSource } from './type';
 import WeaponData from './Weapon.csv';
 
 
@@ -61,7 +61,7 @@ export const DollDataSource = new DataSource<LastmemoriesDataSource.Doll>(DollDa
     })
     .arrayToMap("skills", SkillDataSource, "name");
 
-export type DollData = ExtractDataType<typeof DollDataSource>;
+export type DollData = ReplaceProperty<ExtractDataType<typeof DollDataSource>, "uniqueSKill", SkillData>;
 
 
 export const WeaponDataSource = new DataSource<LastmemoriesDataSource.Weapon>(WeaponData)
