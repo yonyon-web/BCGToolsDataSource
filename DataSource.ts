@@ -1,3 +1,5 @@
+export type ExtractDataType<D> = D extends DataSource<infer T> ? T : never;
+
 export class DataSource<T> {
     data: T[];
 
