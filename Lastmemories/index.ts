@@ -12,6 +12,7 @@ export const SkillDataSource = new DataSource<LastmemoriesDataSource.Skill>(Skil
     .toArray("characteristic")
     .toArray("evoCond1")
     .toArray("evoCond2");
+
 export type SkillData = ExtractDataType<typeof SkillDataSource>;
 
 export const DollDataSource = new DataSource<LastmemoriesDataSource.Doll>(DollData)
