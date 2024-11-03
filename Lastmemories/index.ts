@@ -93,7 +93,10 @@ export const WeaponDataSource = new DataSource<LastmemoriesDataSource.Weapon>(We
                 eva: item.eva,
                 crit: item.crit,
                 agi: item.agi,
-            }
+            },
+            skill4: item.skill4,
+            skill5: item.skill5,
+            skill6: item.skill6,
         }
     });
 
