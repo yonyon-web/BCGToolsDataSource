@@ -26,13 +26,21 @@ export class DataSource<T> {
         return new DataSource(this.data.map(fn))
     }
 
-    arrayToMap<K extends keyof T, O, OK extends keyof O, R extends ReplaceProperty<T, K, O[], true>>(key: K, other: DataSource<O>, oKey: OK): DataSource<R> {
+    arrayToMap<
+        K extends keyof T,
+        O,
+        OK extends keyof O,
+        R extends ReplaceProperty<T, K, O[], true>
+    >(
+        key: K,
+        other: DataSource<O>,
+        oKey: OK
+    ): DataSource<R> {
         const newData = this.data.map(item => {
             return {
                 ...item,
                 [`_${String(key)}`]: item[key],
-                // @ts-ignore
-                [key]: other.data.filter(oItem => oItem[oKey].toString().trim() === item[key].toString().trim()) as O[]
+                [key]: (item[key] as any[]).map(v => other.data.find(oItem => String(oItem[oKey]).trim() === v.toString().trim())) as O[]
             }
         }) as unknown as R[];
 
@@ -59,8 +67,7 @@ export class DataSource<T> {
             return {
                 ...item,
                 [`_${String(key)}`]: item[key],
-                // @ts-ignore
-                [key]: other.values.find(oItem => oItem[oKey].toString().trim() === item[key].toString().trim()) as O
+                [key]: other.values.find(oItem => oItem[oKey].toString().trim() === String(item[key]).trim()) as O
 
             }
         }) as unknown as R[];
