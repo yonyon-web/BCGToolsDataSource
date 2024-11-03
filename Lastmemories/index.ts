@@ -8,12 +8,13 @@ import type { LastmemoriesDataSource } from './type';
 import WeaponData from './Weapon.csv';
 
 
-export const SkillDataSource = new DataSource<LastmemoriesDataSource.Skill>(SkillData)
+const _SkillDataSource = new DataSource<LastmemoriesDataSource.Skill>(SkillData)
     .toArray("characteristic")
     .toArray("evoCond1")
     .toArray("evoCond2");
 
-export type SkillData = ExtractDataType<typeof SkillDataSource>;
+
+
 
 export const DollDataSource = new DataSource<LastmemoriesDataSource.Doll>(DollData)
     .toArray("rarity")
@@ -60,7 +61,12 @@ export const DollDataSource = new DataSource<LastmemoriesDataSource.Doll>(DollDa
             }
         }
     })
-    .arrayToMap("skills", SkillDataSource, "name");
+    .arrayToMap("skills", _SkillDataSource, "name");
+
+export const SkillDataSource = _SkillDataSource.hasManyLazy("learnChara", (skill) => {
+    return DollDataSource.data.filter(doll => doll._skills.includes(skill.name))
+})
+    export type SkillData = ExtractDataType<typeof SkillDataSource>;
 
 export type DollData = ReplaceProperty<ExtractDataType<typeof DollDataSource>, "uniqueSKill", SkillData>;
 

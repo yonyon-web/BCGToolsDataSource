@@ -1,4 +1,4 @@
-import { ReplaceProperty } from "./util";
+import type { ReplaceProperty } from "./util";
 
 export type ExtractDataType<D> = D extends DataSource<infer T> ? T : never;
 
@@ -26,14 +26,15 @@ export class DataSource<T> {
         return new DataSource(this.data.map(fn))
     }
 
-    arrayToMap<K extends keyof T, O, OK extends keyof O, R extends ReplaceProperty<T, K, O[]>>(key: K, other: DataSource<O>, oKey: OK): DataSource<R> {
+    arrayToMap<K extends keyof T, O, OK extends keyof O, R extends ReplaceProperty<T, K, O[], true>>(key: K, other: DataSource<O>, oKey: OK): DataSource<R> {
         const newData = this.data.map(item => {
             return {
                 ...item,
+                [`_${String(key)}`]: item[key],
                 // @ts-ignore
                 [key]: item[key].map(v => other.values.find(oItem => oItem[oKey].toString() === v.toString())) as O[]
             }
-        }) as (R)[];
+        }) as unknown as R[];
 
         return new DataSource(newData);
     }
@@ -52,7 +53,7 @@ export class DataSource<T> {
     oneToMap<
         K extends keyof T,
         O,
-        R extends ReplaceProperty<T, K, O> & Record<`_${string & K}`, T[K]>
+        R extends ReplaceProperty<T, K, O, true>
     >(key: K, other: DataSource<O>, oKey: string): DataSource<R> {
         const newData = this.data.map(item => {
             return {
