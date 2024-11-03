@@ -1,5 +1,5 @@
 
-import { DataSource } from '../DataSource';
+import { DataSource, ExtractDataType } from '../DataSource';
 import ArmorData from './Armor.csv';
 import DollData from './Doll.csv';
 import SetEffectData from './SetEffect.csv';
@@ -12,6 +12,7 @@ export const SkillDataSource = new DataSource<LastmemoriesDataSource.Skill>(Skil
     .toArray("characteristic")
     .toArray("evoCond1")
     .toArray("evoCond2");
+export type SkillData = ExtractDataType<typeof SkillDataSource>;
 
 export const DollDataSource = new DataSource<LastmemoriesDataSource.Doll>(DollData)
     .toArray("rarity")
@@ -60,6 +61,8 @@ export const DollDataSource = new DataSource<LastmemoriesDataSource.Doll>(DollDa
     })
     .arrayToMap("skills", SkillDataSource, "name");
 
+export type DollData = ExtractDataType<typeof DollDataSource>;
+
 
 export const WeaponDataSource = new DataSource<LastmemoriesDataSource.Weapon>(WeaponData)
     .toArray("skill4")
@@ -86,6 +89,8 @@ export const WeaponDataSource = new DataSource<LastmemoriesDataSource.Weapon>(We
             }
         }
     });
+
+export type WeaponData = ExtractDataType<typeof WeaponDataSource>;
 
 const _SetEffectDataSource = new DataSource<LastmemoriesDataSource.SetEffect>(SetEffectData)
     .toArray("effect2")
@@ -117,11 +122,13 @@ export const ArmorDataSource = new DataSource<LastmemoriesDataSource.Armor>(Armo
         }
     })
     .oneToMap("setEffect", _SetEffectDataSource, "name");
+export type ArmorData = ExtractDataType<typeof ArmorDataSource>;
 
 
 export const SetEffectDataSource = _SetEffectDataSource.hasManyLazy("armors", (item) => {
     return ArmorDataSource.data.filter(armor => item.name === armor._setEffect);
 });
+export type SetEffectData = ExtractDataType<typeof SetEffectDataSource>;
 
 
 
