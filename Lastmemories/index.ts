@@ -6,14 +6,14 @@ import SetEffectData from './SetEffect.csv';
 import SkillData from './Skill.csv';
 import type { LastmemoriesDataSource } from './type';
 import WeaponData from './Weapon.csv';
+import SubOptionData from './SubOption.csv';
+import YoutuberData from './Youtuber.csv';
 
 
 const _SkillDataSource = new DataSource<LastmemoriesDataSource.Skill>(SkillData)
     .toArray("characteristic")
     .toArray("evoCond1")
     .toArray("evoCond2");
-
-
 
 
 export const DollDataSource = new DataSource<LastmemoriesDataSource.Doll>(DollData)
@@ -141,9 +141,11 @@ export const SetEffectDataSource = _SetEffectDataSource.hasManyLazy("armors", (i
 export type SetEffectData = ExtractDataType<typeof SetEffectDataSource>;
 
 
+export const SubOptionDataSource = new DataSource<LastmemoriesDataSource.SubOption>(SubOptionData);
+export type SubOptionData = ExtractDataType<typeof SubOptionDataSource>;
 
-
-
+export const YoutuberDataSource = new DataSource<LastmemoriesDataSource.Youtuber>(YoutuberData);
+export type YoutuberData = ExtractDataType<typeof YoutuberDataSource>;
 
 
 
