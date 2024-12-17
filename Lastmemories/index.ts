@@ -6,14 +6,14 @@ import SetEffectData from './SetEffect.csv';
 import SkillData from './Skill.csv';
 import type { LastmemoriesDataSource } from './type';
 import WeaponData from './Weapon.csv';
+import SubOptionData from './SubOption.csv';
+import YoutuberData from './Youtuber.csv';
 
 
 const _SkillDataSource = new DataSource<LastmemoriesDataSource.Skill>(SkillData)
     .toArray("characteristic")
     .toArray("evoCond1")
     .toArray("evoCond2");
-
-
 
 
 export const DollDataSource = new DataSource<LastmemoriesDataSource.Doll>(DollData)
@@ -32,6 +32,8 @@ export const DollDataSource = new DataSource<LastmemoriesDataSource.Doll>(DollDa
             cv: item.cv,
             mv: item.mv,
             rarity: item.rarity,
+            back: (item.rarity.some(r => r.includes("SS")) ? "SS" : item.rarity.some(r => r.includes("S")) ? "S" : " ") as "SS" | "S" | " ",
+            isLimited: item.name.includes("("),
             text: item.text,
             skills: item.skills,
             status: {
@@ -48,8 +50,9 @@ export const DollDataSource = new DataSource<LastmemoriesDataSource.Doll>(DollDa
                 agi: item.agi,
             },
             uniqueSKill: {
-                id: -1,
+                id: item.id,
                 learnChara: [],
+                isUnique: true,
                 type: "アクティブ",
                 effectType: "",
                 name: item.usName,
@@ -65,6 +68,11 @@ export const DollDataSource = new DataSource<LastmemoriesDataSource.Doll>(DollDa
 
 export const SkillDataSource = _SkillDataSource.hasManyLazy("learnChara", (skill) => {
     return DollDataSource.data.filter(doll => doll._skills.includes(skill.name))
+}).map(skill => {
+    return {
+        ...skill,
+        isUnique: false,
+    }
 })
 export type SkillData = ExtractDataType<typeof SkillDataSource>;
 
@@ -141,9 +149,11 @@ export const SetEffectDataSource = _SetEffectDataSource.hasManyLazy("armors", (i
 export type SetEffectData = ExtractDataType<typeof SetEffectDataSource>;
 
 
+export const SubOptionDataSource = new DataSource<LastmemoriesDataSource.SubOption>(SubOptionData);
+export type SubOptionData = ExtractDataType<typeof SubOptionDataSource>;
 
-
-
+export const YoutuberDataSource = new DataSource<LastmemoriesDataSource.Youtuber>(YoutuberData);
+export type YoutuberData = ExtractDataType<typeof YoutuberDataSource>;
 
 
 
