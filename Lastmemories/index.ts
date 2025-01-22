@@ -6,9 +6,10 @@ import SetEffectData from './SetEffect.csv';
 import SkillData from './Skill.csv';
 import type { LastmemoriesDataSource } from './type';
 import WeaponData from './Weapon.csv';
-import SubOptionData from './SubOption.csv';
+import SubStatusData from './SubStatus.csv';
 import YoutuberData from './Youtuber.csv';
 import AccessoryData from './Accessory.csv';
+import { effect } from 'zod';
 
 
 const _SkillDataSource = new DataSource<LastmemoriesDataSource.Skill>(SkillData)
@@ -151,8 +152,17 @@ export const SetEffectDataSource = _SetEffectDataSource.hasManyLazy("armors", (i
 export type SetEffectData = ExtractDataType<typeof SetEffectDataSource>;
 
 
-export const SubOptionDataSource = new DataSource<LastmemoriesDataSource.SubOption>(SubOptionData);
-export type SubOptionData = ExtractDataType<typeof SubOptionDataSource>;
+export const SubStatusDataSource = new DataSource<LastmemoriesDataSource.SubStatus>(SubStatusData).map(item => {
+    return {
+        id: item.id,
+        name: item.name,
+        effect: item.effect,
+        a: [item.a1, item.a2, item.a3, item.a4, item.a5],
+        b: [item.b1, item.b2, item.b3, item.b4, item.b5],
+        c: [item.c1, item.c2, item.c3, item.c4, item.c5], 
+    }
+})
+export type SubStatusData = ExtractDataType<typeof SubStatusDataSource>;
 
 export const YoutuberDataSource = new DataSource<LastmemoriesDataSource.Youtuber>(YoutuberData);
 export type YoutuberData = ExtractDataType<typeof YoutuberDataSource>;
