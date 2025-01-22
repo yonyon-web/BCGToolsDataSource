@@ -15,7 +15,7 @@
 
     const ust = document.querySelector("#\\30 7 + table");
     const usName = ust.querySelector("th > span").childNodes[2]?.textContent?.trim() ?? "★取得不能★";
-    const usAttr = ust.querySelector("th img").attributes.getNamedItem("alt").value;
+    const usAttr = ust.querySelector("th img")?.attributes.getNamedItem("alt").value ?? "★取得不能★";
     const usDescription = ust.querySelector("td").innerText.replaceAll("\n", "");
     const usCharacteristic = Array.from(ust.querySelectorAll("th .textwaku")).map(s => s.innerText);
     console.log([name, "", "", "", "", "", battleStyle, attr, "", skills.join(","), "", "", "", "", "", "", "", "", "", "", "", usName, usAttr, usDescription, usCharacteristic].join("\t"))

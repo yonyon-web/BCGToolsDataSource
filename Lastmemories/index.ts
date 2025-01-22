@@ -8,6 +8,7 @@ import type { LastmemoriesDataSource } from './type';
 import WeaponData from './Weapon.csv';
 import SubOptionData from './SubOption.csv';
 import YoutuberData from './Youtuber.csv';
+import AccessoryData from './Accessory.csv';
 
 
 const _SkillDataSource = new DataSource<LastmemoriesDataSource.Skill>(SkillData)
@@ -124,6 +125,7 @@ export const ArmorDataSource = new DataSource<LastmemoriesDataSource.Armor>(Armo
             role: item.role,
             back: item.back,
             setEffect: item.setEffect,
+            part: item.part,
             status: {
                 hp: item.hp,
                 mp: item.mp,
@@ -157,7 +159,32 @@ export type YoutuberData = ExtractDataType<typeof YoutuberDataSource>;
 
 
 
+export const AccessoryDataSource = new DataSource<LastmemoriesDataSource.Accessory>(AccessoryData)
+    .map(item => {
+        return {
+            id: item.id,
+            name: item.name,
+            role: item.role,
+            back: item.back,
+            setEffect: item.setEffect,
+            status: {
+                hp: item.hp,
+                mp: item.mp,
+                pAtk: item.pAtk,
+                mAtk: item.mAtk,
+                hMag: item.hMag,
+                pDef: item.pDef,
+                mDef: item.mDef,
+                acc: item.acc,
+                eva: item.eva,
+                crit: item.crit,
+                agi: item.agi,
+            }
+        }
+    })
+    .oneToMap("setEffect", _SetEffectDataSource, "name");;
 
+export type AccessoryData = ExtractDataType<typeof AccessoryDataSource>;
 
 
 

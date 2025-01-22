@@ -6,6 +6,7 @@ import type { Skill as SkillType } from './Skill';
 import type { Weapon as WeaponType } from './Weapon';
 import type { SubOption as SubOptionType } from './SubOption';
 import type { Youtuber as YoutuberType } from './Youtuber';
+import type { Accessory as AccessoryType } from './Accessory';
 
 export namespace LastmemoriesDataSource {
     export type Doll = DollType;
@@ -15,4 +16,5 @@ export namespace LastmemoriesDataSource {
     export type SetEffect = SetEffectType;
     export type SubOption = SubOptionType;
     export type Youtuber = YoutuberType;
+    export type Accessory = AccessoryType;
 }
