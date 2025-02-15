@@ -15,4 +15,8 @@ export type Accessory = {
     eva: number;
     crit: number;
     agi: number;
+    skill3: string;
+    skill4: string;
+    skill5: string;
+    skill6: string;
 }
