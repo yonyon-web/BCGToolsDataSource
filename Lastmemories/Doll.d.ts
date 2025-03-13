@@ -27,4 +27,5 @@ export type Doll = {
     usCharacteristic: string;
     usEvoCond1: string;
     usEvoCond2: string;
+    usCoolTime: string;
 }
