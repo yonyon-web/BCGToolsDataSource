@@ -21,11 +21,17 @@ export type Doll = {
     eva: string;
     crit: string;
     agi: string;
+    as3: string;
+    as4: string;
+    as5: string;
+    as6: string;
     usName: string;
     usAttr: string;
     usDescription: string;
     usCharacteristic: string;
     usEvoCond1: string;
     usEvoCond2: string;
+    usEvoEffect1: string;
+    usEvoEffect2: string;
     usCoolTime: string;
 }
